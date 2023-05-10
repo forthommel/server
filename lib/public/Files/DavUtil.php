@@ -32,6 +32,9 @@
 
 namespace OCP\Files;
 
+use OCA\Files_Sharing\SharedStorage;
+use OCP\Constants;
+
 /**
  * This class provides different helper functions related to WebDAV protocol
  *
@@ -75,8 +78,20 @@ class DavUtil {
 		if ($info->isUpdateable()) {
 			$p .= 'NV'; // Renameable, Moveable
 		}
+
+		// since we always add update permissions for the root of movable mounts (and thus shares)
+		// we need to check the shared cache item directly to determine if it's writable
+		$storage = $info->getStorage();
+		/** @psalm-suppress UndefinedClass files_sharing may be disabled but this will still work as expected */
+		if ($info->getInternalPath() === '' && $storage->instanceOfStorage(SharedStorage::class)) {
+			$shareEntry = $storage->getCache()->get('');
+			$isWritable = ($shareEntry->getPermissions() & Constants::PERMISSION_UPDATE);
+		} else {
+			$isWritable = $info->isUpdateable();
+		}
+
 		if ($info->getType() === FileInfo::TYPE_FILE) {
-			if ($info->isUpdateable()) {
+			if ($isWritable) {
 				$p .= 'W';
 			}
 		} else {
