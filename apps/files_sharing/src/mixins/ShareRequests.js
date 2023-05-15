@@ -57,7 +57,9 @@ export default {
 				if (!request?.data?.ocs) {
 					throw request
 				}
-				return new Share(request.data.ocs.data)
+				const share = new Share(request.data.ocs.data)
+				emit('files_sharing:share:created', { share })
+				return share
 			} catch (error) {
 				console.error('Error while creating share', error)
 				const errorMessage = error?.response?.data?.ocs?.meta?.message
@@ -81,6 +83,7 @@ export default {
 				if (!request?.data?.ocs) {
 					throw request
 				}
+				emit('files_sharing:share:deleted', { id })
 				return true
 			} catch (error) {
 				console.error('Error while deleting share', error)
@@ -102,6 +105,7 @@ export default {
 		async updateShare(id, properties) {
 			try {
 				const request = await axios.put(shareUrl + `/${id}`, properties)
+				emit('files_sharing:share:updated', { id })
 				if (!request?.data?.ocs) {
 					throw request
 				} else {
