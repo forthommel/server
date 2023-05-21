@@ -1467,6 +1467,8 @@ class Server extends ServerContainer implements IServerContainer {
 
 		$this->registerAlias(ISpeechToTextManager::class, SpeechToTextManager::class);
 
+		$this->registerAlias(\OCP\IEventSource::class, \OC_EventSource::class);
+
 		$this->connectDispatcher();
 	}
 
@@ -1926,16 +1928,6 @@ class Server extends ServerContainer implements IServerContainer {
 	 */
 	public function getHTTPClientService() {
 		return $this->get(IClientService::class);
-	}
-
-	/**
-	 * Create a new event source
-	 *
-	 * @return \OCP\IEventSource
-	 * @deprecated 20.0.0
-	 */
-	public function createEventSource() {
-		return new \OC_EventSource();
 	}
 
 	/**

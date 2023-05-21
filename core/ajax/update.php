@@ -52,7 +52,7 @@ require_once '../../lib/base.php';
 
 $l = \OC::$server->getL10N('core');
 
-$eventSource = \OC::$server->createEventSource();
+$eventSource = \OC::$server->get(IEventSource::class);
 // need to send an initial message to force-init the event source,
 // which will then trigger its own CSRF check and produces its own CSRF error
 // message
