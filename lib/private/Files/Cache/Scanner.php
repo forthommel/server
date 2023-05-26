@@ -138,6 +138,7 @@ class Scanner extends BasicEmitter implements IScanner {
 	 * @throws \OCP\Lock\LockedException
 	 */
 	public function scanFile($file, $reuseExisting = 0, $parentId = -1, $cacheData = null, $lock = true, $data = null) {
+		\OC::$server->getLogger()->logException(new \Exception("scanning $file"), ['app' => 'files', 'level' => 2]);
 		if ($file !== '') {
 			try {
 				$this->storage->verifyPath(dirname($file), basename($file));
