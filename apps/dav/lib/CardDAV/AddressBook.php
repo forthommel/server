@@ -226,7 +226,11 @@ class AddressBook extends \Sabre\CardDAV\AddressBook implements IShareable, IMov
 	}
 
 	public function propPatch(PropPatch $propPatch) {
-		parent::propPatch($propPatch);
+		// parent::propPatch will only update address books table
+		// if address book is shared, changes have to be made to the properties table
+		if (!$this->isShared()) {
+			parent::propPatch($propPatch);
+		}
 	}
 
 	public function getContactsGroups() {
