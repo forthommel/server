@@ -22,6 +22,7 @@
 
 namespace Test\User;
 
+use OC\EventDispatcher\SymfonyAdapter;
 use OC\User\User;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventDispatcher;
@@ -130,8 +131,8 @@ class DatabaseTest extends Backend {
 		$user2 = $this->getUser();
 		$this->backend->createUser($user2, 'pass1');
 
-		$user1Obj = new User($user1, $this->backend, $this->createMock(EventDispatcherInterface::class));
-		$user2Obj = new User($user2, $this->backend, $this->createMock(EventDispatcherInterface::class));
+		$user1Obj = new User($user1, $this->backend, $this->createMock(SymfonyAdapter::class));
+		$user2Obj = new User($user2, $this->backend, $this->createMock(SymfonyAdapter::class));
 		$emailAddr1 = "$user1@nextcloud.com";
 		$emailAddr2 = "$user2@nextcloud.com";
 

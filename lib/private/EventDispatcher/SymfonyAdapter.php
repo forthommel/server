@@ -113,7 +113,7 @@ class SymfonyAdapter implements EventDispatcherInterface {
 
 		// Event with no payload (object) need special handling
 		if ($newEvent === null) {
-			$this->eventDispatcher->getSymfonyDispatcher()->dispatch($eventName);
+			$this->eventDispatcher->getSymfonyDispatcher()->dispatch(new GenericEvent(), $eventName);
 			return new Event();
 		}
 
