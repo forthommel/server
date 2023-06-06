@@ -32,14 +32,14 @@ use OCP\Files\Node;
  * @since 25.0.1
  */
 class BeforePreviewFetchedEvent extends \OCP\EventDispatcher\Event {
-	private Node $node;
-
 	/**
 	 * @since 25.0.1
 	 */
-	public function __construct(Node $node) {
+	public function __construct(
+		private Node $node,
+		private int $width,
+		private int $height) {
 		parent::__construct();
-		$this->node = $node;
 	}
 
 	/**
@@ -47,5 +47,19 @@ class BeforePreviewFetchedEvent extends \OCP\EventDispatcher\Event {
 	 */
 	public function getNode(): Node {
 		return $this->node;
+	}
+
+	/**
+	 * @since 28.0.0
+	 */
+	public function getWidth(): int {
+		return $this->width;
+	}
+
+	/**
+	 * @since 28.0.0
+	 */
+	public function getHeight(): int {
+		return $this->height;
 	}
 }
