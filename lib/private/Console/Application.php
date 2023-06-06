@@ -214,7 +214,7 @@ class Application {
 	private function loadCommandsFromInfoXml($commands) {
 		foreach ($commands as $command) {
 			try {
-				$c = \OC::$server->query($command);
+				$c = \OCP\Server::get($command);
 			} catch (QueryException $e) {
 				if (class_exists($command)) {
 					try {

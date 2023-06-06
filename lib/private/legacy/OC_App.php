@@ -255,7 +255,7 @@ class OC_App {
 						   array $groups = []) {
 		// Check if app is already downloaded
 		/** @var Installer $installer */
-		$installer = \OC::$server->query(Installer::class);
+		$installer = \OCP\Server::get(Installer::class);
 		$isDownloaded = $installer->isDownloaded($appId);
 
 		if (!$isDownloaded) {
@@ -463,7 +463,7 @@ class OC_App {
 	 */
 	public static function getAlternativeLogIns(): array {
 		/** @var Coordinator $bootstrapCoordinator */
-		$bootstrapCoordinator = \OC::$server->query(Coordinator::class);
+		$bootstrapCoordinator = \OCP\Server::get(Coordinator::class);
 
 		foreach ($bootstrapCoordinator->getRegistrationContext()->getAlternativeLogins() as $registration) {
 			if (!in_array(IAlternativeLogin::class, class_implements($registration->getService()), true)) {
@@ -477,7 +477,7 @@ class OC_App {
 
 			try {
 				/** @var IAlternativeLogin $provider */
-				$provider = \OC::$server->query($registration->getService());
+				$provider = \OCP\Server::get($registration->getService());
 			} catch (QueryException $e) {
 				\OC::$server->getLogger()->logException($e, [
 					'message' => 'Alternative login option {option} can not be initialised.',
@@ -543,7 +543,7 @@ class OC_App {
 	 */
 	public function getSupportedApps(): array {
 		/** @var \OCP\Support\Subscription\IRegistry $subscriptionRegistry */
-		$subscriptionRegistry = \OC::$server->query(\OCP\Support\Subscription\IRegistry::class);
+		$subscriptionRegistry = \OCP\Server::get(\OCP\Support\Subscription\IRegistry::class);
 		$supportedApps = $subscriptionRegistry->delegateGetSupportedApps();
 		return $supportedApps;
 	}

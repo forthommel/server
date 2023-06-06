@@ -83,7 +83,7 @@ class Util {
 	public static function hasExtendedSupport(): bool {
 		try {
 			/** @var \OCP\Support\Subscription\IRegistry */
-			$subscriptionRegistry = \OC::$server->query(\OCP\Support\Subscription\IRegistry::class);
+			$subscriptionRegistry = \OCP\Server::get(\OCP\Support\Subscription\IRegistry::class);
 			return $subscriptionRegistry->delegateHasExtendedSupport();
 		} catch (AppFramework\QueryException $e) {
 		}
