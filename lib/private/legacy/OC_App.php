@@ -52,7 +52,6 @@ declare(strict_types=1);
  */
 
 use OCP\App\Events\AppUpdateEvent;
-use OCP\AppFramework\QueryException;
 use OCP\App\IAppManager;
 use OCP\App\ManagerEvent;
 use OCP\Authentication\IAlternativeLogin;
@@ -65,6 +64,7 @@ use OC\DB\MigrationService;
 use OC\Installer;
 use OC\Repair;
 use OC\Repair\Events\RepairErrorEvent;
+use Psr\Container\ContainerExceptionInterface;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -478,7 +478,7 @@ class OC_App {
 			try {
 				/** @var IAlternativeLogin $provider */
 				$provider = \OCP\Server::get($registration->getService());
-			} catch (QueryException $e) {
+			} catch (ContainerExceptionInterface $e) {
 				\OC::$server->getLogger()->logException($e, [
 					'message' => 'Alternative login option {option} can not be initialised.',
 					'option' => $registration->getService(),

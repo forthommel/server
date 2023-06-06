@@ -49,6 +49,7 @@ namespace OCP;
 use OC\AppScriptDependency;
 use OC\AppScriptSort;
 use bantu\IniGetWrapper\IniGetWrapper;
+use Psr\Container\ContainerExceptionInterface;
 
 /**
  * This class provides different helper functions to make the life of a developer easier
@@ -85,7 +86,7 @@ class Util {
 			/** @var \OCP\Support\Subscription\IRegistry */
 			$subscriptionRegistry = \OCP\Server::get(\OCP\Support\Subscription\IRegistry::class);
 			return $subscriptionRegistry->delegateHasExtendedSupport();
-		} catch (AppFramework\QueryException $e) {
+		} catch (ContainerExceptionInterface $e) {
 		}
 		return \OC::$server->getConfig()->getSystemValueBool('extendedSupport', false);
 	}
