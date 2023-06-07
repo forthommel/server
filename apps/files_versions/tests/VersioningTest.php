@@ -38,6 +38,7 @@ use OC\Files\Storage\Temporary;
 use OCP\IConfig;
 use OCP\IUser;
 use OCP\Share\IShare;
+use OCA\Files_Versions\Versions\IVersionManager;
 
 /**
  * Class Test_Files_versions
