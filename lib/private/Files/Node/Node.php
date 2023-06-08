@@ -128,7 +128,9 @@ class Node implements \OCP\Files\Node {
 		$args = !empty($args) ? $args : [$this];
 		$dispatcher = \OC::$server->getEventDispatcher();
 		foreach ($hooks as $hook) {
-			$this->root->emit('\OC\Files', $hook, $args);
+			if (method_exists($this->root, 'emit')) {
+				$this->root->emit('\OC\Files', $hook, $args);
+			}
 			$dispatcher->dispatch('\OCP\Files::' . $hook, new GenericEvent($args));
 		}
 	}
@@ -289,7 +291,7 @@ class Node implements \OCP\Files\Node {
 	}
 
 	/**
-	 * @return Node
+	 * @return \OCP\Files\Node
 	 */
 	public function getParent() {
 		if ($this->parent === null) {
